@@ -4,7 +4,9 @@
 [![PDD status](http://www.0pdd.com/svg?name=DronMDF/telebot)](http://www.0pdd.com/p?name=DronMDF/telebot)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/DronMDF/telebot/blob/master/LICENSE)
 
- ／|、  
- (ﾟ､ 。7  
-︱ ︶ヽ  
+[Как подключиться к проекту](ENTRY.md)
+
+ ／|、
+ (ﾟ､ 。7
+︱ ︶ヽ
 _U U c )ノ
