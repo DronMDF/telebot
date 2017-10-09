@@ -1,0 +1,7 @@
+#!/usr/bin/env python3
+
+import sys
+from tb import Application, Config
+
+app = Application(Config(sys.argv))
+app.run()
