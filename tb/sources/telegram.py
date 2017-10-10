@@ -1,4 +1,3 @@
-
 class SoTelegram:
 	def __init__(self, config):
 		self.token = config.value('telegram.token')
