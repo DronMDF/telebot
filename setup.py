@@ -1,15 +1,33 @@
 #!/usr/bin/env python3
 
 from distutils.core import setup, Command
+from os import system
+from sys import exit
 from unittest import TestLoader, TextTestRunner
 
+
 class Test(Command):
-	user_options=[]
+	user_options = []
+
 	def initialize_options(self):
 		pass
+
 	def finalize_options(self):
 		pass
+
 	def run(self):
+		try:
+			self.style()
+			self.unittest()
+		except Exception as e:
+			print(e)
+			exit(-1)
+
+	def style(self):
+		if system('find ./ -name "*.py" | xargs pep8 --ignore=W191'):
+			raise RuntimeError("Style check failed")
+
+	def unittest(unittest):
 		suite = TestLoader().discover('.', '*.py')
 		runner = TextTestRunner()
 		results = runner.run(suite)

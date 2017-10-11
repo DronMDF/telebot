@@ -1,7 +1,10 @@
 
+
 def check_working():
     print('да/нет')
-    #todo
+    # todo
+
+
 def check_data():
     print('данные с cpu')
-    #todo
+    # todo
