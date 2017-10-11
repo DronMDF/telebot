@@ -5,4 +5,7 @@ python:
 install:
   - pip install -r requirements.txt
 script:
-  - python -m unittest
+  # @todo #12 Интегрировать test в setup.py
+  - coverage run setup.py check
+after_success:
+  - codecov

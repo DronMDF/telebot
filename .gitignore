@@ -33,3 +33,4 @@
 
 # pythonic stuff
 __pycache__
+.coverage
