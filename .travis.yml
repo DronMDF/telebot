@@ -5,7 +5,7 @@ python:
 install:
   - pip install -r requirements.txt
 script:
-  # @todo #12 Интегрировать test в setup.py
-  - coverage run setup.py check
+  - setup.py check
+  - coverage run setup.py test
 after_success:
   - codecov
