@@ -29,11 +29,11 @@ class AcTelegramReply:
 		self.chat_id = chat_id
 		self.text = text
 
-	def __repr__(self):
-		return "AcTelegramReply(chat_id='%s', text='%s')" % (
-			self.chat_id,
-			self.text
-		)
+	def json(self):
+		return {
+			'chat_id': self.chat_id,
+			'text': self.text
+		}
 
 
 class SoTelegram:
@@ -61,9 +61,9 @@ class FakeMessage(Message):
 
 class Test(TestCase):
 	def test(self):
-		so = SoTelegram(FakeTelegramBot(FakeMessage(3)))
+		so = SoTelegram(FakeTelegramBot(FakeMessage(chat_id=3)))
 		ac = so.actions()
-		self.assertEqual(repr(ac[0]), repr(AcTelegramReply(3, 'Hello')))
+		self.assertEqual(ac[0].json(), {'chat_id': 3, 'text': 'Hello'})
 
 
 if __name__ == '__main__':

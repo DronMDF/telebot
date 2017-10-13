@@ -14,13 +14,10 @@ class Storage:
 		pass
 ```
 
-#Тип объекта - события
+#Тип объекта - действие
 
 ```python
-class Event:
-	def text(self):
-		return ''
-
+class Action:
 	def json(self):
 		return {}
 ```

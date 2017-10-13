@@ -2,7 +2,7 @@ class SoTelegram:
 	def __init__(self, config):
 		self.token = config.value('telegram.token')
 
-	def events(self):
+	def actions(self):
 		# @todo #35 Нужно обратиться к серверу telegram
 		#  и вытащить оттуда свежие сообщения. Для этого нужно использовать
 		#  https://python-telegram-bot.org/ Но пример неправильный,
