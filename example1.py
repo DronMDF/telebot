@@ -61,8 +61,11 @@ class FakeMessage(Message):
 
 class Test(TestCase):
 	def test(self):
+		# given
 		so = SoTelegram(FakeTelegramBot(FakeMessage(chat_id=3)))
+		# when
 		ac = so.actions()
+		# Then
 		self.assertEqual(ac[0].json(), {'chat_id': 3, 'text': 'Hello'})
 
 
