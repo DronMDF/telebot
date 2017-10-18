@@ -1,6 +1,6 @@
 codecov
 coverage
-pep8
+pycodestyle
 pylint
 python-telegram-bot
 radon

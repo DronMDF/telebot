@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 
 from distutils.core import setup, Command
-from os import system
-from sys import exit
 from unittest import TestLoader, TextTestRunner
+import glob
+import pycodestyle
+import sys
 
 
 class Style(Command):
@@ -15,14 +16,22 @@ class Style(Command):
 	def finalize_options(self):
 		pass
 
+	def files(self):
+		return glob.iglob('**/*.py', recursive=True)
+
 	def run(self):
 		try:
-			if system('find ./ -name "*.py" | xargs pep8 --ignore=W191'):
+			total_errors = 0
+			for f in self.files():
+				pep8_errors = pycodestyle.Checker(f, ignore=['W191']).check_all()
+				if pep8_errors != 0:
+					total_errors = total_errors + 1
+			if total_errors != 0:
 				print("Style check failed")
-				exit(-1)
+				sys.exit(-1)
 		except Exception as e:
 			print(e)
-			exit(-1)
+			sys.exit(-1)
 
 
 class Test(Command):
@@ -41,10 +50,10 @@ class Test(Command):
 			results = runner.run(suite)
 			if not results.wasSuccessful():
 				print("Test failed")
-				exit(-1)
+				sys.exit(-1)
 		except Exception as e:
 			print(e)
-			exit(-1)
+			sys.exit(-1)
 
 
 if __name__ == '__main__':
