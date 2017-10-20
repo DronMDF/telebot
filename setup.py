@@ -1,10 +1,15 @@
 #!/usr/bin/env python3
 
-from distutils.core import setup, Command
-from unittest import TestLoader, TextTestRunner
 import glob
-import pycodestyle
 import sys
+from distutils.core import setup, Command
+from itertools import chain
+from unittest import TestLoader, TextTestRunner
+
+import pycodestyle
+from radon.cli import Config
+from radon.cli.harvest import CCHarvester, MIHarvester
+from radon.complexity import SCORE
 
 
 class Style(Command):
@@ -19,14 +24,51 @@ class Style(Command):
 	def files(self):
 		return glob.iglob('**/*.py', recursive=True)
 
+	def pep8(self, f):
+		return pycodestyle.Checker(f, ignore=['W191']).check_all() == 0
+
+	def radon_cc(self, f, config):
+		result = True
+		for ccr in CCHarvester([f], config).results:
+			for r in ccr[1]:
+				''' Не допускается Cyclomatic Complexity больше 5 '''
+				if r.complexity > 5:
+					print('%s: %s' % (ccr[0], r))
+					result = False
+		return result
+
+	def radon_mi(self, f, config):
+		result = True
+		for mir in MIHarvester([f], config).results:
+			''' Не допускается Maintainability Index ниже 30% '''
+			if mir[1]['mi'] < 30:
+				print('%s: %u%%' % (mir[0], mir[1]['mi']))
+				result = False
+		return result
+
+	def radon(self, f):
+		config = Config(
+			exclude=None,
+			ignore=None,
+			no_assert=False,
+			show_closures=False,
+			order=SCORE,
+			multi=True
+		)
+		return all((
+			self.radon_cc(f, config),
+			self.radon_mi(f, config)
+		))
+
+	def check(self, f):
+		return all((
+			self.pep8(f),
+			self.radon(f)
+		))
+
 	def run(self):
 		try:
-			total_errors = 0
-			for f in self.files():
-				pep8_errors = pycodestyle.Checker(f, ignore=['W191']).check_all()
-				if pep8_errors != 0:
-					total_errors = total_errors + 1
-			if total_errors != 0:
+			if not all((self.check(f) for f in self.files())):
 				print("Style check failed")
 				sys.exit(-1)
 		except Exception as e:
