@@ -10,10 +10,8 @@ class Application:
 		self.storage = StTelegram(self.config)
 
 	def run(self):
-		# 38
 		while True:
-			acts = self.source.events() #events()->actions()
+			acts = self.source.actions()
 			for a in acts:
 				self.storage.save(a)
-				sleep(5)
-		pass
+			sleep(5)
