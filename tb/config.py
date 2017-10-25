@@ -3,8 +3,6 @@ class Config:
 		self.args = args
 
 	def value(self, name):
-		# @todo #35 А давайте пока для простоты передадим токен
-		#  в параметрах командной строки, пусть будет первым параметром
-		#  но запрос нужно делать по ключу. Ключ для токена будет 'telegram.token'
-		#  А список аргументов командной строки содержится в self.args
-		return None
+		if name == 'telegram.token':
+			return self.args[1]
+		raise RuntimeError("Wrong configuration value name")
