@@ -10,16 +10,27 @@ class AcTelegramUpdate:
 		return {
 			'chat_id': self.update.message.chat.id,
 			'text': self.update.message.text,
+			'update_id': self.update.update_id
 		}
+
+
+class TelegramOffsetFromDb:
+	def __init__(self, db):
+		self.db = db
+
+	def value(self):
+		# @todo #39 Нужно восстановить из БД значние счетчика
+		#  и использовать его для последующих операций.
+		return 0
 
 
 class SoTelegram:
 	def __init__(self, config):
 		self.config = config
+		self.offset = 0
 
 	def actions(self):
 		bot = telegram.Bot(self.config.value("telegram.token"))
-		# @todo #39 getUpdates нужно вызывать с номером очередного сообщения.
-		#  А пока он повторяет все сообщения, которые к нему поступили.
-		update = bot.getUpdates()
+		update = bot.getUpdates(offset=self.offset)
+		self.offset = max((u.update_id for u in update), default=0) + 1
 		return [AcTelegramUpdate(u) for u in update]
