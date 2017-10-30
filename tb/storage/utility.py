@@ -3,6 +3,5 @@ class StDispatch:
 		self.storages = storages
 
 	def save(self, action):
-		# @todo #47 Необходимо пробросить action
-		#  во все вложенные storage
-		pass
+		for storage in self.storages:
+			storage.save(action)
