@@ -1,3 +1,4 @@
+from time import sleep
 from .sources import SoTelegram
 from .storage import StTelegram
 
@@ -9,7 +10,8 @@ class Application:
 		self.storage = StTelegram(self.config)
 
 	def run(self):
-		# @todo #35 Реализовать в Application.run() основной цикл приложения
-		#  Этот цикл должен вытягивать события из self.source и отправлять
-		#  в self.storage, Интерфейсы описаны в файле types.py, нарушать нельзя.
-		pass
+		while True:
+			acts = self.source.actions()
+			for a in acts:
+				self.storage.save(a)
+			sleep(5)
