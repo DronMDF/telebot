@@ -1,31 +1,58 @@
+from argparse import ArgumentParser
+from unittest import TestCase
+
+
+class ConfigDefault:
+	def __init__(self, values):
+		self.values = values
+
+	def value(self, name):
+		if name not in self.values:
+			raise RuntimeError("No param '%s' in configuration" % name)
+		return self.values[name]
+
+
 class ConfigFromFile:
 	# @todo #39 Необходимо организовать чтение конфигурации
 	#  из файла конфигурации. Формат файла конфигурации - ini
 	#  модуль: https://docs.python.org/3/library/configparser.html
-	def __init__(self, filename):
+	def __init__(self, filename, defaults):
 		self.filename = filename
-
-	def has(self, name):
-		return False
+		self.defaults = defaults
 
 	def value(self, name):
 		raise RuntimeError("Wrong configuration value name")
 
 
 class ConfigFromArgs:
-	# @todo #39 Необходимо организовать разбор параметров из
-	#  командной строки. Для начала достаточно поддержать совместимость
-	#  С имеющимся классом и достать оттуда токен телеграмма
-	#  (первый аргумент) но делать это нужно через модуль:
-	#  https://docs.python.org/3/library/argparse.html
-	def __init__(self, args):
+	def __init__(self, args, defaults):
 		self.args = args
-
-	def has(self, name):
-		return False
+		self.defaults = defaults
 
 	def value(self, name):
-		raise RuntimeError("Wrong configuration value name")
+		parser = ArgumentParser()
+		parser.add_argument('--token', '-t')
+		parser.add_argument('--config', '-c')
+		result = vars(parser.parse_args(self.args[1:]))
+		params = {
+			'config': 'config',
+			'telegram.token': 'token'
+		}
+		if name in params and params[name] in result:
+			value = result[params[name]]
+		else:
+			value = self.defaults.value(name)
+		return value
+
+
+class ConfigFromArgsTest(TestCase):
+	def testTelegramTokenInCommandLine(self):
+		config = ConfigFromArgs(['prog', '-t', 'token'], ConfigDefault({}))
+		self.assertEqual(config.value('telegram.token'), 'token')
+
+	def testConfigFileInCommandLine(self):
+		config = ConfigFromArgs(['p', '-c', '/etc/tb.conf'], ConfigDefault({}))
+		self.assertEqual(config.value('config'), '/etc/tb.conf')
 
 
 class Config:
