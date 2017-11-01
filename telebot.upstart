@@ -1,0 +1,8 @@
+description "Telebot"
+
+start on runlevel [234]
+stop on runlevel [0156]
+
+chdir /var/db/telebot
+exec /usr/bin/telebot -c /etc/telebot.conf
+respawn
