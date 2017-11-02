@@ -1,7 +1,20 @@
 #!/usr/bin/env python3
 
 import sys
-from tb import Application, Config
+from tb import Application, ConfigFromArgs, ConfigFromFile, ConfigFile, ConfigDefault
 
-app = Application(Config(sys.argv))
+app = Application(
+	ConfigFromArgs(
+		sys.argv,
+		ConfigFromFile(
+			ConfigFile(
+				ConfigFromArgs(
+					sys.argv,
+					ConfigDefault({'config': '/etc/telebot.conf'})
+				)
+			),
+			ConfigDefault({})
+		)
+	)
+)
 app.run()

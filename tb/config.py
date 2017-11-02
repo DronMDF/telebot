@@ -69,21 +69,25 @@ class ConfigFromFileTest(TestCase):
 		self.assertEqual(config.value('section.key'), 'value')
 
 
-class ConfigFromArgs:
+class ConfigFromArgs(object):
 	def __init__(self, args, defaults):
 		self.args = args
 		self.defaults = defaults
 
 	def value(self, name):
 		parser = ArgumentParser()
-		parser.add_argument('--token', '-t')
-		parser.add_argument('--config', '-c')
+		parser.add_argument('--token', '-t', nargs='?')
+		parser.add_argument('--config', '-c', nargs='?')
 		result = vars(parser.parse_args(self.args[1:]))
 		params = {
 			'config': 'config',
 			'telegram.token': 'token'
 		}
-		if name in params and params[name] in result:
+		if all((
+			name in params,
+			params[name] in result,
+			result[params[name]] is not None
+		)):
 			value = result[params[name]]
 		else:
 			value = self.defaults.value(name)
@@ -99,12 +103,6 @@ class ConfigFromArgsTest(TestCase):
 		config = ConfigFromArgs(['p', '-c', '/etc/tb.conf'], ConfigDefault({}))
 		self.assertEqual(config.value('config'), '/etc/tb.conf')
 
-
-class Config:
-	def __init__(self, args):
-		self.args = args
-
-	def value(self, name):
-		if name == 'telegram.token':
-			return self.args[1]
-		raise RuntimeError("Wrong configuration value name")
+	def testDefaults(self):
+		config = ConfigFromArgs(['p'], ConfigDefault({'telegram.token': 'token'}))
+		self.assertEqual(config.value('telegram.token'), 'token')
