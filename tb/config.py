@@ -19,7 +19,7 @@ class ConfigFile:
 		self.config = config
 
 	def readall(self):
-		return open(self.config.value('config'), 'r').readall()
+		return open(self.config.value('config'), 'r').read()
 
 
 class ConfigString:
