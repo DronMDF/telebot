@@ -108,8 +108,8 @@ if __name__ == '__main__':
 		url='https://github.com/DronMDF/telebot',
 		packages=['tb', 'tb.sources', 'tb.storage'],
 		data_files=[
-			('/etc/init/telebot', ['telebot.upstart']),
-			('/usr/bin/telebot', ['telebot'])
+			('/etc/init', ['telebot.conf']),
+			('/usr/bin', ['telebot'])
 		],
 		cmdclass={'style': Style, 'test': Test}
 	)
