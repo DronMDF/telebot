@@ -1,0 +1,13 @@
+[Unit]
+Description=Telebot
+After=network.target
+
+[Service]
+Type=forking
+PIDFile=/var/run/telebot.pid
+WorkingDirectory=/var/cache/telebot
+ExecStart=/usr/bin/telebot
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

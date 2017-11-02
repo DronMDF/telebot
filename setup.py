@@ -109,6 +109,7 @@ if __name__ == '__main__':
 		packages=['tb', 'tb.sources', 'tb.storage'],
 		data_files=[
 			('/etc/init', ['telebot.conf']),
+			('/lib/systemd/system', ['telebot.service']),
 			('/usr/bin', ['telebot'])
 		],
 		cmdclass={'style': Style, 'test': Test}
