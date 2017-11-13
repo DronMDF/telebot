@@ -24,6 +24,8 @@ class TelegramOffsetFromDb:
 		return 0
 
 
+# @todo #39 Этот класс должен форммировать ответную реакцию на основе заданного набора реакций.
+#  И Набор реакций лучше передавать извне, чтобы не раздувать код.
 class SoTelegram:
 	def __init__(self, config):
 		self.config = config
