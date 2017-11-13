@@ -107,6 +107,10 @@ if __name__ == '__main__':
 		author_email='dron.valyaev@gmail.com',
 		url='https://github.com/DronMDF/telebot',
 		packages=['tb', 'tb.sources', 'tb.storage'],
-		data_files=[('/usr/bin/telebot', ['telebot'])],
+		data_files=[
+			('/etc/init', ['telebot.conf']),
+			('/lib/systemd/system', ['telebot.service']),
+			('/usr/bin', ['telebot'])
+		],
 		cmdclass={'style': Style, 'test': Test}
 	)

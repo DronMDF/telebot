@@ -1,0 +1,13 @@
+[Unit]
+Description=Telebot
+After=network.target
+
+[Service]
+Type=forking
+PIDFile=/var/run/telebot.pid
+ExecStart=/sbin/start-stop-daemon -S -b -mp /var/run/telebot.pid -d /var/cache/telebot -a /usr/bin/telebot
+ExecStop=/sbin/start-stop-daemon -K -p /var/run/telebot.pid
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
