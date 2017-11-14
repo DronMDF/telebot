@@ -13,7 +13,9 @@ class SoSafe:
 		self.source = source
 
 	def actions(self):
-		# @todo #39 В процессе выполнения action может возникнуть
-		#  исключение. В этом случае необходимо донести
-		#  до админитратора информацию о том, что пошло не так.
-		return self.source.actions()
+		try:
+			return self.source.actions()
+		except Exception:
+			# @todo #58 Из текста исключения необходимо
+			#  сформировать сообщение для администратора
+			return []

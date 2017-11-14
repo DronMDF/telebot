@@ -1,12 +1,12 @@
 from time import sleep
-from .sources import SoTelegram
+from .sources import SoTelegram, SoSafe
 from .storage import StTelegram
 
 
 class Application:
 	def __init__(self, config):
 		self.config = config
-		self.source = SoTelegram(self.config)
+		self.source = SoSafe(SoTelegram(self.config))
 		self.storage = StTelegram(self.config)
 
 	def run(self):
