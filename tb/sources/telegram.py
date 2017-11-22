@@ -8,20 +8,17 @@ class TelegramOffsetFromDb:
 		self.db = db
 
 	def value(self):
-		# @todo #39 Нужно восстановить из БД значние счетчика
-		#  и использовать его для последующих операций.
-		return 0
+		return self.db.get('update_id') + 1
 
 
 class TelegramBot:
-	def __init__(self, config):
+	def __init__(self, config, offset):
 		self.config = config
-		self.offset = 0
+		self.offset = offset
 
 	def getUpdates(self):
 		bot = telegram.Bot(self.config.value("telegram.token"))
-		update = bot.getUpdates(offset=self.offset)
-		self.offset = max((u.update_id for u in update), default=0) + 1
+		update = bot.getUpdates(offset=self.offset.value())
 		return update
 
 

@@ -11,7 +11,7 @@ class TinyDataBase:
 		db.insert({'name': name, 'value': value})
 
 	def get(self, name):
-		db = TunyDB(self.filename)
+		db = TinyDB(self.filename)
 		Value = Query()
 		# должна вернуть последнее значение value
 		return db.search(Value.name == name)[-1]['value']

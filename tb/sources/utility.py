@@ -15,7 +15,8 @@ class SoSafe:
 	def actions(self):
 		try:
 			return self.source.actions()
-		except Exception:
+		except Exception as e:
 			# @todo #58 Из текста исключения необходимо
 			#  сформировать сообщение для администратора
+			print(e)
 			return []
