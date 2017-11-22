@@ -1,5 +1,11 @@
 from time import sleep
-from .sources import SoTelegram, SoSafe, TelegramBot, ReactionEcho, TelegramOffsetFromDb
+from .sources import (
+	ReactionEcho,
+	SoSafe,
+	SoTelegram,
+	TelegramBot,
+	TelegramOffsetFromDb
+)
 from .storage import StTelegram, StDispatch, StDbTelegramOffset, TinyDataBase
 
 
