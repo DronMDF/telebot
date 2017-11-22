@@ -1,6 +1,6 @@
 from time import sleep
 from .sources import SoTelegram, SoSafe, TelegramBot, ReactionEcho
-from .storage import StTelegram
+from .storage import StTelegram, StDispatch, StDbTelegramOffset, TinyDataBase
 
 
 class Application:
@@ -12,7 +12,12 @@ class Application:
 				ReactionEcho()
 			)
 		)
-		self.storage = StTelegram(self.config)
+		self.storage = StDispatch(
+			StTelegram(self.config),
+			StDbTelegramOffset(
+				TinyDataBase('telegram.json')
+			)
+		)
 
 	def run(self):
 		while True:

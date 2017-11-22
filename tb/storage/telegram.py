@@ -15,4 +15,4 @@ class StDbTelegramOffset:
 		self.db = db
 
 	def save(self, action):
-		self.db.set('update_id', message.json('update_id'))
+		self.db.set('update_id', action.json()['update_id'])
