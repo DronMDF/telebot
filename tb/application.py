@@ -1,18 +1,30 @@
 from time import sleep
-from .sources import SoTelegram, SoSafe, TelegramBot, ReactionEcho
-from .storage import StTelegram
+from .sources import (
+	ReactionEcho,
+	SoSafe,
+	SoTelegram,
+	TelegramBot,
+	TelegramOffsetFromDb
+)
+from .storage import StTelegram, StDispatch, StDbTelegramOffset, TinyDataBase
 
 
 class Application:
 	def __init__(self, config):
-		self.config = config
+		telegram_db = TinyDataBase('telegram.json')
 		self.source = SoSafe(
 			SoTelegram(
-				TelegramBot(self.config),
+				TelegramBot(
+					config,
+					TelegramOffsetFromDb(telegram_db)
+				),
 				ReactionEcho()
 			)
 		)
-		self.storage = StTelegram(self.config)
+		self.storage = StDispatch(
+			StTelegram(config),
+			StDbTelegramOffset(telegram_db)
+		)
 
 	def run(self):
 		while True:
