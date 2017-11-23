@@ -1,4 +1,4 @@
-from tinydb import TinyDB, Query
+from tinydb import TinyDB, where
 
 
 class TinyDataBase:
@@ -7,11 +7,11 @@ class TinyDataBase:
 
 	def set(self, name, value):
 		db = TinyDB(self.filename)
-		# @todo #39 нужно использовать update
-		db.insert({'name': name, 'value': value})
+		db.upsert({'name': name, 'value': value}, where('name') == name)
 
-	def get(self, name):
+	def get(self, name, default=None):
 		db = TinyDB(self.filename)
-		Value = Query()
-		# должна вернуть последнее значение value
-		return db.search(Value.name == name)[-1]['value']
+		try:
+			return db.get(where('name') == name)['value']
+		except IndexError:
+			return default
