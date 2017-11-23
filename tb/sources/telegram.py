@@ -8,7 +8,7 @@ class TelegramOffsetFromDb:
 		self.db = db
 
 	def value(self):
-		return self.db.get('update_id') + 1
+		return self.db.get('update_id', 0) + 1
 
 
 class TelegramBot:
