@@ -16,6 +16,8 @@ class ReactionEcho:
 		return AcTelegramUpdate(update)
 
 
+
+
 # @todo #68 Нужно сделать такую реакцию,
 #  которая могла бы выбирать из нескольких реакций.
 #  То есть необходимо реализовать ReactionChoiced
