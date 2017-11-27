@@ -1,4 +1,3 @@
-
 class AcTelegramUpdate:
 	def __init__(self, update):
 		self.update = update
@@ -12,10 +11,20 @@ class AcTelegramUpdate:
 
 
 class ReactionEcho:
+	def check(self, update):
+		return True
+
 	def react(self, update):
 		return AcTelegramUpdate(update)
 
+class ReactionChoiced:
+	def __init__(self,*reactions):
+		self.reactions=reactions
 
-# @todo #68 Нужно сделать такую реакцию,
-#  которая могла бы выбирать из нескольких реакций.
-#  То есть необходимо реализовать ReactionChoiced
+	def check(self,update):
+		return True
+
+	def react(self,update):
+		for r in self.reactions:
+			if r.check(update):
+				return r.react(update)
