@@ -7,8 +7,8 @@ class SoJoin:
 
 	def actions(self):
 		return list[itertools.chain(s.actions() for s in self.sources)]
-	
-	
+
+
 class SoJoinTest:
 	# @todo Что-то я немного сомневаюсь, что SoJoin работает корректно.
 	#  И это удобное место, чтобы попробовать написать тест.
