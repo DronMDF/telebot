@@ -16,6 +16,8 @@ class SoSafe:
 		try:
 			return self.source.actions()
 		except Exception:
+			if self.source.actions.find("warning") != -1:
+				begin = self.source.actions.find("warning") #позиция начала текста
 			# @todo #58 Из текста исключения необходимо
 			#  сформировать сообщение для администратора
 			return []
