@@ -29,4 +29,3 @@ class ReactionChoiced:
 		for r in self.reactions:
 			if r.check(update):
 				return r.react(update)
-			
