@@ -1,11 +1,19 @@
+import itertools
+
+
 class SoJoin:
 	def __init__(self, *sources):
 		self.sources = sources
 
 	def actions(self):
-		# @todo #47 Необходимо собрать actions со всех внутренних
-		#  источников и вернуть в виде общего списка
-		return []
+		return list[itertools.chain(s.actions() for s in self.sources)]
+
+
+class SoJoinTest:
+	# @todo Что-то я немного сомневаюсь, что SoJoin работает корректно.
+	#  И это удобное место, чтобы попробовать написать тест.
+	#  Примеры оформления тестов можно посмотреть в других файлах.
+	pass
 
 
 class SoSafe:
