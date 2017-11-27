@@ -1,14 +1,9 @@
 import psutil
 
-
 class SoHDD:
-def free_space(DISK):
-		# @todo #40 Необходимо определить размер свободного места
-		#  на диске. Если размер свободного места меньше чем 10%
-		#  от диска - сгенерировать событие.
-		free = psutil.disk_usage(DISK).free
-		total = psutil.disk_usage(DISK).total
-		if free/(total/100)>=10
-			return free
-		else
-			raise Exception('less then 10% is free')
+	def actions():
+		if psutil.disk_usage('/').percent > 90:
+			# @todo #41 Сформировать Action, который доставит админу
+			#  уведомление о том, что на диске кончилось место
+			pass
+		return []
