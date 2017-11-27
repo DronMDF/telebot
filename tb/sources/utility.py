@@ -1,11 +1,11 @@
+import itertools
+
 class SoJoin:
 	def __init__(self, *sources):
 		self.sources = sources
 
 	def actions(self):
-		# @todo #47 Необходимо собрать actions со всех внутренних
-		#  источников и вернуть в виде общего списка
-		return []
+		return list[itertools.chain(s.actions() for s in self.sources)]
 
 
 class SoSafe:
@@ -15,9 +15,8 @@ class SoSafe:
 	def actions(self):
 		try:
 			return self.source.actions()
-		except Exception:
-			if self.source.actions.find("warning") != -1:
-				begin = self.source.actions.find("warning") #позиция начала текста
+		except Exception as e:
 			# @todo #58 Из текста исключения необходимо
 			#  сформировать сообщение для администратора
+			print(e)
 			return []
