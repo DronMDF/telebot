@@ -7,7 +7,7 @@ class StTelegram:
 
 	def save(self, action):
 		bot = telegram.Bot(self.config.value('telegram.token'))
-		bot.sendMessage(**action.json())
+		action.send(bot)
 
 
 class StDbTelegramOffset:
@@ -15,4 +15,4 @@ class StDbTelegramOffset:
 		self.db = db
 
 	def save(self, action):
-		self.db.set('update_id', action.json()['update_id'])
+		action.save(self.db)

@@ -1,18 +1,15 @@
 class AcTelegramUpdate:
-	# @todo #74 Это мешок с данными. Но этот класс может быть более
-	#  ответственным за свои данные. В зависимости от того, какой сторедж -
-	#  у экшина будет вызываться метод send, или метод save. В который
-	#  будет передаваться интрефейс транспорта, или интерфейс БД
-	#  соответственно.
 	def __init__(self, update):
 		self.update = update
 
-	def json(self):
-		return {
-			'chat_id': self.update.message.chat.id,
-			'text': self.update.message.text,
-			'update_id': self.update.update_id
-		}
+	def save(self, db):
+		db.set('update_id', self.update.update_id)
+
+	def send(self, transport):
+		transport.sendMessage(
+			chat_id=self.update.message.chat.id,
+			text=self.update.message.text
+		)
 
 
 class ReactionEcho:
