@@ -5,4 +5,4 @@ pycodestyle
 pylint
 python-telegram-bot
 radon
-tinydb
+tinydb>=3.7.0

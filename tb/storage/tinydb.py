@@ -11,7 +11,7 @@ class TinyDataBase:
 
 	def get(self, name, default=None):
 		db = TinyDB(self.filename)
-		try:
-			return db.get(where('name') == name)['value']
-		except IndexError:
-			return default
+		item = db.get(where('name') == name)
+		if item is not None:
+			return item.get('value', default)
+		return default
