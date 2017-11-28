@@ -55,8 +55,15 @@ class FakeBot:
 		return [telegram.Update(7, FakeMessage(self.text))]
 
 
+class FakeTransport:
+	def sendMessage(self, chat_id, text):
+		self.chat_id = chat_id
+		self.text = text
+
+
 class SoTelegramTest(unittest.TestCase):
 	def test(self):
 		so = SoTelegram(FakeBot("hello"), ReactionEcho())
-		reply = next(a.json()['text'] for a in so.actions())
-		self.assertEqual(reply, "hello")
+		transport = FakeTransport()
+		so.actions()[0].send(transport)
+		self.assertEqual(transport.text, "hello")

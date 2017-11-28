@@ -1,4 +1,5 @@
 import itertools
+import traceback
 
 
 class SoJoin:
@@ -23,8 +24,8 @@ class SoSafe:
 	def actions(self):
 		try:
 			return self.source.actions()
-		except Exception as e:
+		except Exception:
+			traceback.print_exc()
 			# @todo #58 Из текста исключения необходимо
 			#  сформировать сообщение для администратора
-			print(e)
 			return []
