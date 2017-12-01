@@ -1,5 +1,7 @@
 from time import sleep
 from .sources import (
+	ReactionChoiced,
+	ReactionConcrete,
 	ReactionEcho,
 	SoSafe,
 	SoTelegram,
@@ -18,7 +20,10 @@ class Application:
 					config,
 					TelegramOffsetFromDb(telegram_db)
 				),
-				ReactionEcho()
+				ReactionChoiced(
+					ReactionConcrete('Hi', 'Heyya, guest'),
+					ReactionEcho()
+				)
 			)
 		)
 		self.storage = StDispatch(
