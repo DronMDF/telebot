@@ -47,12 +47,27 @@ class ReactionConcrete:
 		return AcTelegramText(update, self.answer)
 
 
+class ReactionRestrict:
+	def __init__(self, name, reaction):
+		self.name = name
+		self.reaction = reaction
+
+	def check(self, update):
+		if update.effective_user.username != self.name:
+			return False
+		return self.reaction.check(update)
+
+	def react(self, update):
+		assert update.effective_user.username == self.name
+		return self.reaction.react(update)
+
+
 class ReactionChoiced:
 	def __init__(self, *reactions):
 		self.reactions = reactions
 
 	def check(self, update):
-		return True
+		return any((r.check(update) for r in self.reactions))
 
 	def react(self, update):
 		for r in self.reactions:
