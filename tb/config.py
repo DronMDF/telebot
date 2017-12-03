@@ -83,11 +83,7 @@ class ConfigFromArgs(object):
 			'config': 'config',
 			'telegram.token': 'token'
 		}
-		if all((
-			name in params,
-			params[name] in result,
-			result[params[name]] is not None
-		)):
+		if params.get(name) in result and result[params[name]] is not None:
 			value = result[params[name]]
 		else:
 			value = self.defaults.value(name)

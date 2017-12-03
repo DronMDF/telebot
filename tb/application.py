@@ -1,14 +1,6 @@
 from time import sleep
-from .sources import (
-	ReactionChoiced,
-	ReactionConcrete,
-	ReactionEcho,
-	SoSafe,
-	SoTelegram,
-	TelegramBot,
-	TelegramOffsetFromDb
-)
-from .storage import StTelegram, StDispatch, StDbTelegramOffset, TinyDataBase
+from .sources import *
+from .storage import *
 
 
 class Application:
@@ -21,7 +13,13 @@ class Application:
 					TelegramOffsetFromDb(telegram_db)
 				),
 				ReactionChoiced(
-					ReactionConcrete('Hi', 'Heyya, guest'),
+					ReactionRestrict(
+						config.value('admin.name'),
+						ReactionChoiced(
+							ReactionConcrete('Hi', 'Heyya, guest'),
+							ReactionConcrete('By', 'Good by! dron')
+						)
+					),
 					ReactionEcho()
 				)
 			)
