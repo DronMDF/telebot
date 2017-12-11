@@ -73,3 +73,15 @@ class ReactionChoiced:
 		for r in self.reactions:
 			if r.check(update):
 				return r.react(update)
+
+class RactionAlways:
+	def __init__(self,text):
+		self.text = text
+
+	def check(self,update):
+		return True
+
+	def react(self,update):
+		return self.text
+
+
