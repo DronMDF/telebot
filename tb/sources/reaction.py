@@ -84,3 +84,11 @@ class ReactionAlways:
 
 	def react(self, update):
 		return self.text
+
+
+class ReactionStatus:
+	def check(self, update):
+		return update.message.text == '/status'
+
+	def react(self, update):
+		return AcTelegramText(update, "Все хорошо")
