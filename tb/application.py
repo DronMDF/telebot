@@ -17,6 +17,7 @@ class Application:
 						ReactionRestrict(
 							config.value('telegram.username'),
 							ReactionChoiced(
+								ReactionStatus(),
 								ReactionAlways("Не совсем понятно, что ты хочешь мне сказать")
 							)
 						),

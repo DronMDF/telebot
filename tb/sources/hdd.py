@@ -9,13 +9,10 @@ class AcLowHDD:
 		pass
 
 	def send(self, transport):
-		transport.sendMessage(
-			chat_id=self.chat_id,
-			text="Мало места на жестком диске"
-		)
+		transport.sendMessage(chat_id=self.chat_id, text=self.text)
 
 
-class SoHDD:
+class SoLowHdd:
 	def __init__(self, chat_id):
 		self.chat_id = chat_id
 
