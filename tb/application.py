@@ -1,4 +1,5 @@
 from time import sleep
+from datetime import timedelta
 from .sources import *
 from .storage import *
 
@@ -24,7 +25,10 @@ class Application:
 						ReactionAlways("Ты кто такой, давай, досвидания")
 					)
 				),
-				SoLowHdd(config.value('telegram.chat_id'))
+				SoNotFlood(
+					SoLowHdd(config.value('telegram.chat_id')),
+					timedelta(hours=1)
+				)
 			)
 		)
 		self.storage = StDispatch(
