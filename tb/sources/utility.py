@@ -41,7 +41,8 @@ class SoNotFlood:
 	def actions(self):
 		if datetime.now() > self.nexttime:
 			actions = self.source.actions()
-			self.nexttime = datetime.now() + self.interval
+			if actions:
+				self.nexttime = datetime.now() + self.interval
 		else:
 			actions = []
 		return actions
