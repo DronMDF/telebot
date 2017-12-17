@@ -18,7 +18,7 @@ class Application:
 						ReactionRestrict(
 							config.value('telegram.username'),
 							ReactionChoiced(
-								ReactionStatus(),
+								ReactionStatus(StatusHdd()),
 								ReactionAlways("Не совсем понятно, что ты хочешь мне сказать")
 							)
 						),
@@ -26,8 +26,8 @@ class Application:
 					)
 				),
 				SoNotFlood(
-					SoLowHdd(config.value('telegram.chat_id')),
-					timedelta(hours=1)
+					SoLowHdd(config.value('telegram.chat_id'), level=70),
+					timedelta(minutes=3)
 				)
 			)
 		)

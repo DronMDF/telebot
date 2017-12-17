@@ -13,10 +13,16 @@ class AcLowHDD:
 
 
 class SoLowHdd:
-	def __init__(self, chat_id):
+	def __init__(self, chat_id, level=90):
 		self.chat_id = chat_id
+		self.level = level
 
 	def actions(self):
-		if psutil.disk_usage('/').percent > 90:
+		if psutil.disk_usage('/').percent > self.level:
 			return [AcLowHDD(self.chat_id)]
 		return []
+
+
+class StatusHdd:
+	def asString(self):
+		return 'Диск занят на %u%%' % psutil.disk_usage('/').percent
