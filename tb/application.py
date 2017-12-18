@@ -25,6 +25,7 @@ class Application:
 				),
 				SoLowHdd(config.value('telegram.chat_id'))
 			)
+		)
 		self.storage = StDispatch(
 			StTelegram(config),
 			StDbTelegramOffset(telegram_db)
