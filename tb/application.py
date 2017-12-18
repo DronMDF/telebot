@@ -7,20 +7,23 @@ class Application:
 	def __init__(self, config):
 		telegram_db = TinyDataBase(config.value('telegram.db'))
 		self.source = SoSafe(
-			SoTelegram(
-				TelegramBot(
-					config,
-					TelegramOffsetFromDb(telegram_db)
-				),
-				ReactionChoiced(
-					ReactionRestrict(
-						config.value('telegram.username'),
-						ReactionChoiced(
-							ReactionAlways("Не совсем понятно, что ты хочешь мне сказать")
-						)
+			SoJoin(
+				SoTelegram(
+					TelegramBot(
+						config,
+						TelegramOffsetFromDb(telegram_db)
 					),
-					ReactionAlways("Ты кто такой, давай, досвидания")
-				)
+					ReactionChoiced(
+						ReactionRestrict(
+							config.value('telegram.username'),
+							ReactionChoiced(
+								ReactionAlways("Не совсем понятно, что ты хочешь мне сказать")
+							)
+						),
+						ReactionAlways("Ты кто такой, давай, досвидания")
+					)
+				),
+				SoLowHdd(config.value('telegram.chat_id'))
 			)
 		)
 		self.storage = StDispatch(
