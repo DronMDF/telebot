@@ -75,7 +75,7 @@ class ReactionChoiced:
 				return r.react(update)
 
 
-class RactionAlways:
+class ReactionAlways:
 	def __init__(self, text):
 		self.text = text
 

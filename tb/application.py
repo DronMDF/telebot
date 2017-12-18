@@ -5,7 +5,7 @@ from .storage import *
 
 class Application:
 	def __init__(self, config):
-		telegram_db = TinyDataBase('telegram.json')
+		telegram_db = TinyDataBase(config.value('telegram.db'))
 		self.source = SoSafe(
 			SoTelegram(
 				TelegramBot(

@@ -7,7 +7,7 @@ class SoJoin:
 		self.sources = sources
 
 	def actions(self):
-		return list[itertools.chain(s.actions() for s in self.sources)]
+		return list(itertools.chain.from_iterable(s.actions() for s in self.sources))
 
 
 class SoJoinTest:
