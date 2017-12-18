@@ -5,7 +5,7 @@ from .storage import *
 
 class Application:
 	def __init__(self, config):
-		telegram_db = TinyDataBase('telegram.json')
+		telegram_db = TinyDataBase(config.value('telegram.db'))
 		self.source = SoSafe(
 			SoTelegram(
 				TelegramBot(
@@ -14,13 +14,12 @@ class Application:
 				),
 				ReactionChoiced(
 					ReactionRestrict(
-						config.value('admin.name'),
+						config.value('telegram.username'),
 						ReactionChoiced(
-							ReactionConcrete('Hi', 'Heyya, guest'),
-							ReactionConcrete('By', 'Good by! dron')
+							ReactionAlways("Не совсем понятно, что ты хочешь мне сказать")
 						)
 					),
-					ReactionEcho()
+					ReactionAlways("Ты кто такой, давай, досвидания")
 				)
 			)
 		)
