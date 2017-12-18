@@ -1,13 +1,13 @@
 import psutil
 
-class AcLowHDD:
 
+class AcLowHDD:
         def __init__(self, chat_id):
             self.chat_id = chat_id
 
-
         def save(self, db):
             pass
+
         def send(self, transport):
             transport.sendMessage(
                 chat_id=self.chat_id,
@@ -16,8 +16,9 @@ class AcLowHDD:
 
 
 class SoHDD:
-    def __init__(self,chat_id):
-        self.chat_id= chat_id
+    def __init__(self, chat_id):
+        self.chat_id = chat_id
+        
     def actions(self):
         if psutil.disk_usage('/').percent > 90:
            return[AcLowHDD(self.chat_id)]
