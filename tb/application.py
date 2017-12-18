@@ -21,7 +21,7 @@ class Application:
 					),
 					ReactionAlways("Ты кто такой, давай, досвидания")
 				)
-			)
+			) SoLowHdd()
 		)
 		self.storage = StDispatch(
 			StTelegram(config),
