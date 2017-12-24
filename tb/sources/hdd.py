@@ -9,7 +9,10 @@ class AcLowHDD:
 		pass
 
 	def send(self, transport):
-		transport.sendMessage(chat_id=self.chat_id, text=self.text)
+		transport.sendMessage(
+			chat_id=self.chat_id,
+			text="Мало места на жестком диске"
+		)
 
 
 class SoLowHdd:

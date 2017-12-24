@@ -83,7 +83,7 @@ class ReactionAlways:
 		return True
 
 	def react(self, update):
-		return self.text
+		return AcTelegramText(update, self.text)
 
 
 class ReactionStatus:
