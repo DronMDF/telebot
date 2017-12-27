@@ -1,3 +1,4 @@
+from datetime import datetime
 import itertools
 import traceback
 
@@ -29,3 +30,19 @@ class SoSafe:
 			# @todo #58 Из текста исключения необходимо
 			#  сформировать сообщение для администратора
 			return []
+
+
+class SoNotFlood:
+	def __init__(self, source, interval):
+		self.source = source
+		self.interval = interval
+		self.nexttime = datetime.now()
+
+	def actions(self):
+		if datetime.now() > self.nexttime:
+			actions = self.source.actions()
+			if actions:
+				self.nexttime = datetime.now() + self.interval
+		else:
+			actions = []
+		return actions

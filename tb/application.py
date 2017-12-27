@@ -1,4 +1,5 @@
 from time import sleep
+from datetime import timedelta
 from .sources import *
 from .storage import *
 
@@ -17,13 +18,17 @@ class Application:
 						ReactionRestrict(
 							config.value('telegram.username'),
 							ReactionChoiced(
+								ReactionStatus(StatusHdd()),
 								ReactionAlways("Не совсем понятно, что ты хочешь мне сказать")
 							)
 						),
 						ReactionAlways("Ты кто такой, давай, досвидания")
 					)
 				),
-				SoLowHdd(config.value('telegram.chat_id'))
+				SoNotFlood(
+					SoLowHdd(config.value('telegram.chat_id'), level=70),
+					timedelta(minutes=3)
+				)
 			)
 		)
 		self.storage = StDispatch(

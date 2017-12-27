@@ -83,4 +83,15 @@ class ReactionAlways:
 		return True
 
 	def react(self, update):
-		return self.text
+		return AcTelegramText(update, self.text)
+
+
+class ReactionStatus:
+	def __init__(self, status_text):
+		self.status_text = status_text
+
+	def check(self, update):
+		return update.message.text == '/status'
+
+	def react(self, update):
+		return AcTelegramText(update, self.status_text.asString())
